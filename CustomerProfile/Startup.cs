@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.EntityFrameworkCore;
+using CustomerProfile.Data;
 
 namespace CustomerProfile
 {
@@ -26,6 +28,7 @@ namespace CustomerProfile
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CustomerProfileDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -49,6 +52,9 @@ namespace CustomerProfile
                     }
                 });
             });
+
+            services.AddDbContext<CustomerProfileDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("CustomerProfileDbContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
