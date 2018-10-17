@@ -14,14 +14,15 @@ namespace CustomerProfile.Migrations
                 {
                     CustomerProfileID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_customerprofile", x => x.CustomerProfileID);
+                    table.PrimaryKey("PK_customerprofile", x => new { x.Name, x.PhoneNumber });
+                    table.UniqueConstraint("AK_customerprofile_CustomerProfileID", x => x.CustomerProfileID);
                 });
         }
 

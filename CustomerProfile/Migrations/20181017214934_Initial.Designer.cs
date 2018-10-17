@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerProfile.Migrations
 {
     [DbContext(typeof(CustomerProfileDbContext))]
-    [Migration("20181017194214_Initial")]
+    [Migration("20181017214934_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,19 +23,21 @@ namespace CustomerProfile.Migrations
 
             modelBuilder.Entity("CustomerProfile.Models.customerprofile", b =>
                 {
-                    b.Property<int>("CustomerProfileID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address");
-
-                    b.Property<DateTime>("DateOfBirth");
-
                     b.Property<string>("Name");
 
                     b.Property<string>("PhoneNumber");
 
-                    b.HasKey("CustomerProfileID");
+                    b.Property<string>("Address");
+
+                    b.Property<int>("CustomerProfileID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateOfBirth");
+
+                    b.HasKey("Name", "PhoneNumber");
+
+                    b.HasAlternateKey("CustomerProfileID");
 
                     b.ToTable("customerprofile");
                 });

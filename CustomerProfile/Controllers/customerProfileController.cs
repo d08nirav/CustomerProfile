@@ -29,34 +29,57 @@ namespace CustomerProfile.Controllers
         }
 
         // GET: api/customerProfile/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Getcustomerprofile([FromRoute] int id)
+        /* [HttpGet("{id}")]
+         public async Task<IActionResult> Getcustomerprofile([FromRoute] string id)
+         {
+             if (!ModelState.IsValid)
+             {
+                 return BadRequest(ModelState);
+             }
+
+             var customerprofile = await _context.customerprofile.FindAsync(id);
+
+             if (customerprofile == null)
+             {
+                 return NotFound();
+             }
+
+             return Ok(customerprofile);
+         }*/
+
+        // GET: api/customerProfile/Nirav
+        [HttpGet("{name}")]
+        public IEnumerable<customerprofile> GetcustomerprofilebyName([FromRoute] string name)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var customerprofile = await _context.customerprofile.FindAsync(id);
-
-            if (customerprofile == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(customerprofile);
+            return _context.customerprofile.Where(s => s.Name == name);
         }
 
         // PUT: api/customerProfile/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Putcustomerprofile([FromRoute] int id, [FromBody] customerprofile customerprofile)
+        public async Task<IActionResult> Edit([FromRoute]int id,[FromBody]customerprofile customerprofile)
+        {
+            var customerprofileTuple = await _context.customerprofile.SingleOrDefaultAsync(m => m.CustomerProfileID == id);
+            if (customerprofileTuple == null)
+            {
+                return NotFound();
+            }
+            customerprofileTuple.Name = customerprofile.Name;
+            customerprofileTuple.Address = customerprofile.Address;
+            customerprofileTuple.PhoneNumber = customerprofile.PhoneNumber;
+            customerprofileTuple.DateOfBirth = customerprofile.DateOfBirth;
+            _context.Update(customerprofileTuple);
+            _context.SaveChanges();
+            return Ok(customerprofile);
+        }
+
+        /*public async Task<IActionResult> Putcustomerprofile([FromRoute] string id, [FromBody] customerprofile customerprofile)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != customerprofile.CustomerProfileID)
+            if (id != customerprofile.Name)
             {
                 return BadRequest();
             }
@@ -80,7 +103,7 @@ namespace CustomerProfile.Controllers
             }
 
             return NoContent();
-        }
+        }*/
 
         // POST: api/customerProfile
         [HttpPost]
@@ -92,14 +115,28 @@ namespace CustomerProfile.Controllers
             }
 
             _context.customerprofile.Add(customerprofile);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (customerprofileExists(customerprofile.Name))
+                {
+                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("Getcustomerprofile", new { id = customerprofile.CustomerProfileID }, customerprofile);
+            return CreatedAtAction("Getcustomerprofile", new { id = customerprofile.Name }, customerprofile);
         }
 
         // DELETE: api/customerProfile/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Deletecustomerprofile([FromRoute] int id)
+        public async Task<IActionResult> Deletecustomerprofile([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
@@ -118,9 +155,9 @@ namespace CustomerProfile.Controllers
             return Ok(customerprofile);
         }
 
-        private bool customerprofileExists(int id)
+        private bool customerprofileExists(string id)
         {
-            return _context.customerprofile.Any(e => e.CustomerProfileID == id);
+            return _context.customerprofile.Any(e => e.Name == id);
         }
     }
 }
