@@ -18,7 +18,9 @@ namespace CustomerProfile.Models
         [DataType(DataType.PhoneNumber)]
         //[Key, Column(Order = 1)]
         public string PhoneNumber { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
+        //[Column(TypeName = "Date")]
         public DateTime DateOfBirth { get; set; }
     }
 }

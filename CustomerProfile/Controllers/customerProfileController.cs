@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CustomerProfile.Data;
 using CustomerProfile.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomerProfile.Controllers
 {
@@ -28,25 +30,6 @@ namespace CustomerProfile.Controllers
             return _context.customerprofile;
         }
 
-        // GET: api/customerProfile/5
-        /* [HttpGet("{id}")]
-         public async Task<IActionResult> Getcustomerprofile([FromRoute] string id)
-         {
-             if (!ModelState.IsValid)
-             {
-                 return BadRequest(ModelState);
-             }
-
-             var customerprofile = await _context.customerprofile.FindAsync(id);
-
-             if (customerprofile == null)
-             {
-                 return NotFound();
-             }
-
-             return Ok(customerprofile);
-         }*/
-
         // GET: api/customerProfile/Nirav
         [HttpGet("{name}")]
         public IEnumerable<customerprofile> GetcustomerprofilebyName([FromRoute] string name)
@@ -56,7 +39,7 @@ namespace CustomerProfile.Controllers
 
         // PUT: api/customerProfile/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit([FromRoute]int id,[FromBody]customerprofile customerprofile)
+        public async Task<IActionResult> Edit([FromRoute]int id,[FromBody]customerprofileTemp customerprofile)
         {
             var customerprofileTuple = await _context.customerprofile.SingleOrDefaultAsync(m => m.CustomerProfileID == id);
             if (customerprofileTuple == null)
@@ -72,49 +55,23 @@ namespace CustomerProfile.Controllers
             return Ok(customerprofile);
         }
 
-        /*public async Task<IActionResult> Putcustomerprofile([FromRoute] string id, [FromBody] customerprofile customerprofile)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != customerprofile.Name)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(customerprofile).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!customerprofileExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }*/
-
-        // POST: api/customerProfile
+        /// <summary>
+        /// Creates a New Customer.
+        /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Postcustomerprofile([FromBody] customerprofile customerprofile)
+        public async Task<IActionResult> Postcustomerprofile([FromBody] customerprofileTemp customerprofile)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.customerprofile.Add(customerprofile);
+            customerprofile profile = new customerprofile();
+            profile.Name = customerprofile.Name;
+            profile.Address = customerprofile.Address;
+            profile.DateOfBirth = customerprofile.DateOfBirth;
+            profile.PhoneNumber = customerprofile.PhoneNumber;
+            _context.customerprofile.Add(profile);
             try
             {
                 await _context.SaveChangesAsync();
@@ -136,7 +93,7 @@ namespace CustomerProfile.Controllers
 
         // DELETE: api/customerProfile/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Deletecustomerprofile([FromRoute] string id)
+        public async Task<IActionResult> Deletecustomerprofile([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -159,5 +116,17 @@ namespace CustomerProfile.Controllers
         {
             return _context.customerprofile.Any(e => e.Name == id);
         }
+    }
+
+    public class customerprofileTemp
+    {
+        
+        public string Name { get; set; }
+        public string Address { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+        [DataType(DataType.Date)]
+        //[DisplayFormat( DataFormatString = "{0:d}")]
+        public DateTime DateOfBirth { get; set; }
     }
 }
