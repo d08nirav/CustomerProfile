@@ -9,10 +9,18 @@ using CustomerProfile.Data;
 using CustomerProfile.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Http;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
+using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
 
 namespace CustomerProfile.Controllers
 {
     [Route("api/[controller]")]
+    //[RoutePrefix("api/books")]
     [ApiController]
     public class customerProfileController : ControllerBase
     {
@@ -35,6 +43,14 @@ namespace CustomerProfile.Controllers
         public IEnumerable<customerprofile> GetcustomerprofilebyName([FromRoute] string name)
         {
             return _context.customerprofile.Where(s => s.Name == name);
+        }
+
+        // GET: api/customerProfile/0420408014
+        //[Route("api/[controller]/phone/")]
+        [HttpGet("{phone}")]
+        public IEnumerable<customerprofile> GetcustomerprofilebyPhone([FromRoute] string phone)
+        {
+            return _context.customerprofile.Where(s => s.PhoneNumber == phone);
         }
 
         // PUT: api/customerProfile/5

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CustomerProfile</name>
+    </assembly>
+    <members>
+        <member name="M:CustomerProfile.Controllers.customerProfileController.Postcustomerprofile(CustomerProfile.Controllers.customerprofileTemp)">
+            <summary>
+            Creates a New Customer.
+            </summary>
+        </member>
+        <member name="M:CustomerProfile.Controllers.testController.Get(System.Int32)">
+            <summary>  
+            To test GET method.   
+            </summary>
+            <param name="id">The value that will be returned when testing is successful</param>
+        </member>
+        <member name="M:CustomerProfile.Controllers.testController.Post(System.String)">
+            <summary>  
+            To test POST method.   
+            </summary>
+        </member>
+        <member name="M:CustomerProfile.Controllers.testController.Put(System.Int32,System.String)">
+            <summary>  
+            To test PUT method.   
+            </summary>
+            <param name="id">The id that will be returned when testing is successful</param>
+            <param name="value">The value in body that will be returned when testing is successful</param>
+            <returns>A JSON list of all movies.</returns>
+        </member>
+        <member name="M:CustomerProfile.Controllers.testController.Delete(System.Int32)">
+            <summary>  
+            To test DELETE method.   
+            </summary>
+            <param name="id">The id that will be returned when testing is successful</param>
+        </member>
+    </members>
+</doc>

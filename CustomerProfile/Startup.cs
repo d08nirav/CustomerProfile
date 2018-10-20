@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using CustomerProfile.Data;
+using System.Reflection;
+using System.IO;
 
 namespace CustomerProfile
 {
@@ -51,8 +53,11 @@ namespace CustomerProfile
                         Url = "https://example.com/license"
                     }
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
-
+            
             services.AddDbContext<CustomerProfileDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("CustomerProfileDbContext")));
         }
