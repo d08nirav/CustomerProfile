@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerProfile", "CustomerProfile\CustomerProfile.csproj", "{70B3030D-14D0-495A-90D1-9467065B34DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerProfile", "CustomerProfile\CustomerProfile.csproj", "{70B3030D-14D0-495A-90D1-9467065B34DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestCustomerProfile", "XUnitTestCustomerProfile\XUnitTestCustomerProfile.csproj", "{34825D32-1FCB-4F72-BE8F-1B15A2985BBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{70B3030D-14D0-495A-90D1-9467065B34DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70B3030D-14D0-495A-90D1-9467065B34DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70B3030D-14D0-495A-90D1-9467065B34DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34825D32-1FCB-4F72-BE8F-1B15A2985BBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34825D32-1FCB-4F72-BE8F-1B15A2985BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34825D32-1FCB-4F72-BE8F-1B15A2985BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34825D32-1FCB-4F72-BE8F-1B15A2985BBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
