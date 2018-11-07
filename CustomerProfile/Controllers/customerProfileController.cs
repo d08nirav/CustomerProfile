@@ -41,9 +41,9 @@ namespace CustomerProfile.Controllers
 
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public IEnumerable<customerprofile> Getcustomerprofile()
+        public IActionResult Getcustomerprofile()
         {
-            return _context.customerprofile;
+            return Ok(_context.customerprofile);
         }
 
         /// <summary align="left">
